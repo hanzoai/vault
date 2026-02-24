@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: vault-service
+  namespace: hanzo-vault
+  labels:
+    app: vault-service

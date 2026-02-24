@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vault-service
+  namespace: hanzo-vault
+  labels:
+    app: vault-service
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: vault-service
+  template:
+    metadata:
+      labels:
+        app: vault-service
+    spec:
+      imagePullSecrets:
+        - name: ghcr-secret
+      serviceAccountName: vault-service
+      containers:
+        - name: vault-service
+          image: ghcr.io/hanzoai/vault:latest
+          ports:
+            - containerPort: 8443
+              protocol: TCP
+          env:
+            - name: VAULT_ADDR
+              value: ":8443"
+          resources:
+            requests:
+              cpu: 500m
+              memory: 512Mi
+            limits:
+              cpu: "2"
+              memory: 1Gi
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8443
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            timeoutSeconds: 3
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8443
+            initialDelaySeconds: 3
+            periodSeconds: 5
+            timeoutSeconds: 3
+          securityContext:
+            readOnlyRootFilesystem: true
+            runAsNonRoot: true
+            runAsUser: 1000
+            runAsGroup: 1000
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
