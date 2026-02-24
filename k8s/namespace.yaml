@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: hanzo-vault
+  labels:
+    name: hanzo-vault
+    pci-zone: "3"
+    pci-scope: "true"
