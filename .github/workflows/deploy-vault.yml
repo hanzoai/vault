@@ -29,7 +29,5 @@ jobs:
     uses: hanzoai/.github/.github/workflows/docker-build.yml@main
     with:
       image: ghcr.io/hanzoai/vault
-      deploy: true
-      deploy-deployment: vault
-      deploy-namespace: hanzo
+      deploy: false
     secrets: inherit
