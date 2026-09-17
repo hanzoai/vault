@@ -107,7 +107,7 @@ func TestDetectBrand(t *testing.T) {
 
 func TestTokenUniqueness(t *testing.T) {
 	tokens := make(map[string]bool)
-	for i := 0; i < 100; i++ {
+	for range 100 {
 		token, err := GenerateToken()
 		if err != nil {
 			t.Fatalf("GenerateToken failed: %v", err)

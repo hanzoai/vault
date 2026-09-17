@@ -12,8 +12,8 @@ import (
 
 // Handler wraps the vault service for HTTP.
 type Handler struct {
-	vault  *store.Vault
-	audit  audit.Logger
+	vault *store.Vault
+	audit audit.Logger
 }
 
 // NewHandler creates a new API handler.
@@ -214,7 +214,7 @@ func identityFromContext(r *http.Request) *auth.Identity {
 	}
 }
 
-func writeJSON(w http.ResponseWriter, status int, v interface{}) {
+func writeJSON(w http.ResponseWriter, status int, v any) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(status)
 	json.NewEncoder(w).Encode(v)
